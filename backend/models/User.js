@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
 
 //Improve query performance on frequently searched fields by adding indexes to your Mongoose schemas.
 // Add index on email
-userSchema.index({ email: 1 });
+// userSchema.index({ email: 1 });
 
 module.exports = mongoose.model('User', userSchema);
 

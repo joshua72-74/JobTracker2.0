@@ -7,6 +7,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Mount your authentication routes here
+const authRoutes = require('./routes/auth');
+app.use('/api/auth', authRoutes);
+
+const jobsRoutes = require('./routes/jobs');
+app.use('/api/jobs', jobsRoutes);
+
+
+
 app.get('/', (req, res) => {
     res.send('Backend is running!');
 });
@@ -25,7 +34,6 @@ mongoose.connect(process.env.MONGO_URI)
 
 // Ensure your server.js loads environment variables and connects to MongoDB:
 require('dotenv').config();
-const mongoose = require('mongoose');
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
