@@ -1,34 +1,47 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import styles from './App.module.css';  // Import CSS module
+import Home from './components/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
-
-// Import PrivateRoute component (create it as shown below)
 import PrivateRoute from './components/PrivateRoute';
-// Import your Dashboard component (create Dashboard.js in components folder)
 import Dashboard from './components/Dashboard';
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
-        
-        {/* Private route protecting Dashboard */}
-        <Route
-          path="/dashboard"
-          element={
-            <PrivateRoute>
-              <Dashboard />
-            </PrivateRoute>
-          }
-        />
+    <div className={styles.app}>
+      <header className={styles.appHeader}>
+        <h1>Welcome to JobTracker 2.0</h1>
+        <a
+          className={styles.appLink}
+          href="https://reactjs.org"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Learn React
+        </a>
+      </header>
 
-        {/* Public home page */}
-        <Route path="/" element={<h1>Welcome to JobTracker2.0</h1>} />
-      </Routes>
-    </Router>
+      <Router>
+        <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+
+          {/* Private route protecting Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            }
+          />
+
+          {/* Public home page */}
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

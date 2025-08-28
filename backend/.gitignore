@@ -1,3 +1,15 @@
 node_modules/
 .env
 dist/
+
+# Logs
+logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Build output folders (if applicable)
+build/
+coverage/

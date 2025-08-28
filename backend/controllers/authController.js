@@ -1,7 +1,7 @@
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { validationResult, check } = require('express-validator');
+const { validationResult } = require('express-validator');
 
 exports.signup = async (req, res) => {
   // Validate input
@@ -21,7 +21,7 @@ exports.signup = async (req, res) => {
     user = new User({
       name,
       email,
-      password
+      password,
     });
 
     // Hash password
@@ -32,9 +32,9 @@ exports.signup = async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id,
-        role: user.role
-      }
+        id: user._id, // Use _id for Mongo consistency
+        role: user.role,
+      },
     };
 
     jwt.sign(
@@ -42,13 +42,16 @@ exports.signup = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' },
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error(err.message);
+          return res.status(500).json({ msg: 'Token generation failed' });
+        }
         res.json({ token });
       }
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 };
 
@@ -68,9 +71,9 @@ exports.login = async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id,
-        role: user.role
-      }
+        id: user._id, // Use _id here as well
+        role: user.role,
+      },
     };
 
     jwt.sign(
@@ -78,12 +81,15 @@ exports.login = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: '1h' },
       (err, token) => {
-        if (err) throw err;
+        if (err) {
+          console.error(err.message);
+          return res.status(500).json({ msg: 'Token generation failed' });
+        }
         res.json({ token });
       }
     );
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).json({ msg: 'Server error' });
   }
 };
