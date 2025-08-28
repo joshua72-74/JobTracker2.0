@@ -10,7 +10,7 @@ import Dashboard from './components/Dashboard';
 function App() {
   return (
     <div className={styles.app}>
-      <header className={styles.appHeader}>
+      <header className={styles.appHeader} data-testid="app-header">
         <h1>Welcome to JobTracker 2.0</h1>
         <a
           className={styles.appLink}

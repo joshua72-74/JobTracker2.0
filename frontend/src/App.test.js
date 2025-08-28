@@ -3,8 +3,8 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
 
-test('renders welcome message', () => {
+test('renders welcome message in app header', () => {
   render(<App />);
-  const welcomeElement = screen.getByText(/welcome to jobtracker/i);
-  expect(welcomeElement).toBeInTheDocument();
+  const header = screen.getByTestId('app-header');
+  expect(header).toHaveTextContent(/welcome to jobtracker/i);
 });
